@@ -17,7 +17,8 @@ class Steam:
         self.driver = driver
 
         # Replace with your own profile link
-        user_url = "https://steamcommunity.com/id/FractalNoise/games/?tab=all"
+        #user_url = "https://steamcommunity.com/id/FractalNoise/games/?tab=all"
+        user_url = "https://steamcommunity.com/profiles/76561198061704008/"
         self.driver.get(user_url)
         print("Acquiring url data...")
 
@@ -80,13 +81,13 @@ class Games:
         if title is not None:
             self.game_dict["Game Title"] = title.text
 
-    def description(self):
-        """Grabs the description of the game."""
-        desc = self.page_soup.find("div", class_="game_description_snippet")
+    # def description(self):
+    #     # Grabs the description of the game.
+    #     desc = self.page_soup.find("div", class_="game_description_snippet")
 
-        # Checks if the game description exists on the page
-        if desc is not None:
-            self.game_dict["Description"] = desc.text.strip()
+    #     # Checks if the game description exists on the page
+    #     if desc is not None:
+    #         self.game_dict["Description"] = desc.text.strip()
 
     def release_date(self):
         """Grabs the release date of the game."""
@@ -96,44 +97,46 @@ class Games:
         if date is not None:
             self.game_dict["Release Date"] = date.text
 
-    def recent_reviews(self):
-        """Grabs the recent reviews section of the game."""
-        recent = self.page_soup.find("div", class_="summary column")
 
-        # Checks if recent reviews exists on the page
-        if recent is not None:
-            self.game_dict["Recent Reviews"] = " ".join(recent.text.split())
+    # def recent_reviews(self):
+    #     """Grabs the recent reviews section of the game."""
+    #     recent = self.page_soup.find("div", class_="summary column")
 
-    def all_reviews(self):
-        """Grabs the all reviews section of the game."""
-        all_time = self.page_soup.find("div", class_="summary column")
+    #     # Checks if recent reviews exists on the page
+    #     if recent is not None:
+    #         self.game_dict["Recent Reviews"] = " ".join(recent.text.split())
 
-        # Checks if all reviews exists on the page
-        if all_time is not None:
-            all_time = all_time.find_next("div", class_="summary column")
 
-            if all_time is not None:
-                self.game_dict["All Reviews"] = " ".join(all_time.text.split())
+    # def all_reviews(self):
+    #     """Grabs the all reviews section of the game."""
+    #     all_time = self.page_soup.find("div", class_="summary column")
 
-    def tags(self):
-        """Grabs the game tags."""
-        tags_list = self.page_soup.find_all("a", class_="app_tag", limit=5)
+    #     # Checks if all reviews exists on the page
+    #     if all_time is not None:
+    #         all_time = all_time.find_next("div", class_="summary column")
 
-        # Checks if game tags exist on the page
-        if tags_list is not None:
-            self.game_dict["Tags"] = ", ".join([tag.text.strip() for tag in tags_list])
+    #         if all_time is not None:
+    #             self.game_dict["All Reviews"] = " ".join(all_time.text.split())
+
+    # def tags(self):
+    #     """Grabs the game tags."""
+    #     tags_list = self.page_soup.find_all("a", class_="app_tag", limit=5)
+
+    #     # Checks if game tags exist on the page
+    #     if tags_list is not None:
+    #         self.game_dict["Tags"] = ", ".join([tag.text.strip() for tag in tags_list])
 
     def write(self):
         """Opens and writes the data to the csv file."""
         with open("steam_backlog.csv", "a", newline="", encoding="utf-8") as steam_file:
             fieldnames = [
                 "Game Title",
-                "Description",
+                # "Description",
                 "Hours Played",
                 "Release Date",
-                "Recent Reviews",
-                "All Reviews",
-                "Tags",
+                # "Recent Reviews",
+                # "All Reviews",
+                # "Tags",
             ]
 
             csv_writer = csv.DictWriter(steam_file, fieldnames=fieldnames)
@@ -181,11 +184,11 @@ def main():
 
         # Grab all the info from the game page
         game.game_name()
-        game.description()
+        # game.description()
         game.release_date()
-        game.recent_reviews()
-        game.all_reviews()
-        game.tags()
+        # game.recent_reviews()
+        # game.all_reviews()
+        # game.tags()
 
         # Write to the file
         game.write()
