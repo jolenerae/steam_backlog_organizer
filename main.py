@@ -18,7 +18,7 @@ class Steam:
 
         # Replace with your own profile link
         #user_url = "https://steamcommunity.com/id/FractalNoise/games/?tab=all"
-        user_url = "https://steamcommunity.com/profiles/76561198061704008/"
+        user_url = "https://steamcommunity.com/profiles/76561198061704008/games/?tab=all/"
         self.driver.get(user_url)
         print("Acquiring url data...")
 
