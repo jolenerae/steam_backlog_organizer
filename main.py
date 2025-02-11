@@ -4,6 +4,7 @@ import requests
 import re
 import time
 from selenium import webdriver
+from selenium.webdriver.firefox.service import Service as FirefoxService
 from selenium.webdriver.firefox.options import Options
 
 
@@ -157,12 +158,13 @@ def main():
     print("Initializing webdriver...")
 
     # Make the webdriver run in headless mode
-    options = Options()
+    options = webdriver.FirefoxOptions()
     options.headless = True
 
     # Replace the executable path with the path to your webdriver download
+    service = FirefoxService(executable_path=r"C:\Users\14698\Documents\GitHub\steam_backlog_organizer\geckodriver.exe")
     driver = webdriver.Firefox(
-        options=options, executable_path=r"G:\Downloads v2\geckodriver.exe"
+        service=service, options=options
     )
 
     # Make a new profile object
